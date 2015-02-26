@@ -70,8 +70,8 @@ WSGI_APPLICATION = 'tryDjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.',
+        'NAME': '',
     }
 }
 
@@ -164,6 +164,24 @@ STRIPE_SECRET_KEY = 'sk_test_fqnWmzO5jkX1iNpHaMhlh7Vi'
 # Stripe Live Keys
 #STRIPE_PUBLISHABLE_KEY = 'pk_live_ZjhVgLb6552S4sFBXkAtUdGx'
 #STRIPE_SECRET_KEY = 'sk_live_Rh2QbqTyWg2CxpU5dO9137Dd'
+
+# Heroku config
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config(default="sqlite:///db.sqlite3")
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Static asset configuration
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Configure Memcached
 def get_cache():
